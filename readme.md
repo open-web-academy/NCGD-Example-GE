@@ -1,4 +1,4 @@
-# `Near Certifed Game Developer`
+# `Near Certified Game Developer`
 
 # 📄 Descripción
 
