@@ -1,5 +1,5 @@
 import * as MainMenu from "./scenes/MainMenuScene";
-import * as Game from "./Scenes/gameScene.js";
+import * as Game from "./scenes/gameScene.js";
 
 const mainMenu = MainMenu.MainMenu;
 const game = Game.GameScene;
