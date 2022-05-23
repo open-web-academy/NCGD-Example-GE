@@ -1,4 +1,4 @@
-import * as MainMenu from "./scenes/MainMenuScene";
+import * as MainMenu from "./scenes/MainMenuScene.js";
 import * as Game from "./scenes/gameScene.js";
 
 const mainMenu = MainMenu.MainMenu;
