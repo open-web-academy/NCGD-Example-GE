@@ -37,7 +37,7 @@ export function GetAccountId(){
     return wallet.getAccountId()
 }
 export async function ObtenerPuntuacion(){
-    var result = await contract.obtener_puntuacion({owner_id:GetAccountId()}, 300000000000000);
+    var result = await contract.obtener_puntuacion({owner_id: GetAccountId()}, 300000000000000);
     return result.puntuacion;
 }
 export async function GuardarPuntuacion(score){
