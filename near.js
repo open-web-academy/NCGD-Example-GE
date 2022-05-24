@@ -15,8 +15,8 @@ const wallet = new WalletConnection(near, 'ncd-ii');
 const contract_id = "dev-1652728160134-47102512188392";
 
 const contract = new Contract(wallet.account(), contract_id, {
-    viewMethods: [ "obtener_puntuaciones" ],
-    changeMethods: [  "obtener_puntuacion", "guardar_puntuacion" ],
+    viewMethods: [ "obtener_puntuacion", "obtener_puntuaciones" ],
+    changeMethods: [   "guardar_puntuacion" ],
     sender: wallet.account()
 });
 
@@ -37,7 +37,7 @@ export function GetAccountId(){
     return wallet.getAccountId()
 }
 export async function ObtenerPuntuacion(){
-    var result = await contract.obtener_puntuacion({ }, 300000000000000);
+    var result = await contract.obtener_puntuacion({owner_id:GetAccountId()}, 300000000000000);
     return result.puntuacion;
 }
 export async function GuardarPuntuacion(score){
