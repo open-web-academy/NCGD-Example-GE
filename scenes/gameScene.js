@@ -1,4 +1,5 @@
 import * as Near  from "../near.js";
+import * as MainMenu from "./scenes/MainMenuScene.js";
 
 export class GameScene extends Phaser.Scene {
     gameOver = false;
