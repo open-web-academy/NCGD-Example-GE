@@ -1,6 +1,6 @@
 import * as nearAPI from "../lib/near-api-js.js"
 
-const { connect, keyStores, WalletConnection, Contract } = nearApi;
+const { connect, keyStores, WalletConnection, Contract, providers } = nearApi;
 const config = {
       networkId: 'testnet',
       keyStore: new keyStores.BrowserLocalStorageKeyStore(),
@@ -16,7 +16,7 @@ const contract_id = "dev-1652728160134-47102512188392";
 
 const contract = new Contract(wallet.account(), contract_id, {
     viewMethods: [ "obtener_puntuacion", "obtener_puntuaciones" ],
-    changeMethods: [   "guardar_puntuacion" ],
+    changeMethods: [ "guardar_puntuacion" ],
     sender: wallet.account()
 });
 
@@ -46,4 +46,32 @@ export async function GuardarPuntuacion(score){
 export async function ObtenerPuntuaciones(){
     var result = await contract.obtener_puntuaciones({});
     return result;
+}
+const provider = new providers.JsonRpcProvider(
+    "https://archival-rpc.testnet.near.org"
+  );
+export async function GetInfoByURL(){
+    return new Promise(async resolve => {
+    let URLactual = window.location.toString();
+        if(URLactual.indexOf("?") == -1){
+            resolve(null);
+        } else {
+            if(URLactual.indexOf("transactionHashes") !== -1){
+                let start = URLactual.indexOf("=");
+                let end = URLactual.indexOf("&");
+                let transactionHashes = URLactual.substring(start + 1, end == -1 ? URLactual.length : end);
+                
+                const resultJson = await provider.txStatus(transactionHashes, GetAccountId());
+                resolve(resultJson);
+            }
+            else if(URLactual.indexOf("rejected") !== -1) {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Operación cancelada',
+                })
+                resolve(null);
+            }
+        }
+    history.pushState('Home', 'Title', '/');
+    });
 }
