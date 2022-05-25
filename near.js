@@ -65,10 +65,7 @@ export async function GetInfoByURL(){
                 resolve(resultJson);
             }
             else if(URLactual.indexOf("rejected") !== -1) {
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Operación cancelada',
-                })
+               console.log("operacion cancelada")
                 resolve(null);
             }
         }
