@@ -28,9 +28,8 @@ export class GameScene extends Phaser.Scene {
 
         let value = await Near.GetInfoByURL();
         if(value != null){
-            console.log(value.receipts_outcome[0].outcome.logs[0].puntuacion);
             this.isLeaderboard = true;
-            new Board(this, value.receipts_outcome[0].outcome.logs[0].puntuacion);
+            new Board(this, JSON.parse(value.receipts_outcome[0].outcome.logs[0]).puntuacion);
             return;
         }
 
@@ -93,8 +92,9 @@ class Board {
         scores.sort((a, b) => {  return b.puntuacion - a.puntuacion; } );
         this.container = context.add.container(context.sys.game.scale.gameSize.width / 2, context.sys.game.scale.gameSize.height / 2);
         this.container.add(context.add.sprite(0,0, "board").setScale(3));
-        this.container.add(context.add.text(70, -50, context.score, {fontFamily: "bit", fontSize: 45}))
-        this.container.add(context.add.text(70, 10, bestScore, {fontFamily: "bit", fontSize: 45}))
+        this.container.add(context.add.text(75, -45, bestScore, {fontFamily: "bit", fontSize: 45}))
+        console.log(scores.filter(user => user.id_jugador == Near.GetAccountId())[0].puntuacion);
+        this.container.add(context.add.text(75, 15, scores.filter(user => user.id_jugador == Near.GetAccountId())[0].puntuacion, {fontFamily: "bit", fontSize: 45}))
 
         new MainMenu.Button(context.game.config.width / 2, context.game.config.height / 2 + 120, 3, "button", "Restart", context, context.Restart);
         scores.forEach((element, index) => {
