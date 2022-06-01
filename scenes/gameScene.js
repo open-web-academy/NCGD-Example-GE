@@ -71,11 +71,16 @@ export class GameScene extends Phaser.Scene {
         this.scoreText.setText(this.score.toString());
     }
     GameOver = async() => {
+        if(this.gameOver)
+            return;
         this.gameOver = true;
-        this.add.image(this.game.config.width / 2, this.game.config.height / 2 - 200, "gameOver").setScale(3)
-        await Near.GuardarPuntuacion(this.score);
-        new Board(this, this.score);
-    }   
+        this.add.image(this.game.config.width / 2, this.game.config.height / 2 - 200, "gameOver").setScale(3);
+        let bestScore = await Near.ObtenerPuntuacion();
+        console.log(bestScore)
+        if(this.score > bestScore)
+            await Near.GuardarPuntuacion(this.score);
+        new Board(this, bestScore);
+    }
     Restart = () => {
         this.isLeaderboard = this.gameOver = false;
         this.score = 0;
