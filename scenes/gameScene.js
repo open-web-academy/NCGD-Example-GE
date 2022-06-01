@@ -79,7 +79,7 @@ export class GameScene extends Phaser.Scene {
         console.log(bestScore)
         if(this.score > bestScore)
             await Near.GuardarPuntuacion(this.score);
-        new Board(this, bestScore);
+        new Board(this, this.score);
     }
     Restart = () => {
         this.isLeaderboard = this.gameOver = false;
